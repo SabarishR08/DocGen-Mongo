@@ -1,0 +1,219 @@
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DocGen-Mongo | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        .table-hover tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        .card-header a {
+            cursor: pointer;
+        }
+        td a {
+            margin-right: 6px;
+            font-size: 1.2em;
+            text-decoration: none;
+        }
+        td a:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container mt-4">
+        {% include 'alerts.html' %}
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Candidates Dashboard</h2>
+            <div class="btn-group">
+                <!-- Buttons for Admin and HR -->
+                {% if current_user.role in ['admin', 'hr'] %}
+                <a href="{{ url_for('manage_templates') }}" class="btn btn-primary">Manage Templates</a>
+                <a href="{{ url_for('bulk_upload') }}" class="btn btn-secondary">Bulk Upload</a>
+                {% endif %}
+                <!-- Button for Admin only -->
+                {% if current_user.role == 'admin' %}
+                <a href="{{ url_for('download_all_candidates') }}" class="btn btn-success">📦 Download All Candidates</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Add Candidate Form - Visible to Admin and HR -->
+        {% if current_user.role in ['admin', 'hr'] %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-primary text-white">Add Candidate</div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('add_candidate') }}">
+                    {{ candidate_form.hidden_tag() }}
+                    <div class="row mb-2">
+                        <div class="col-md-3 mb-2">
+                            {{ candidate_form.name.label(class="form-label") }}
+                            {{ candidate_form.name(class="form-control") }}
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            {{ candidate_form.email.label(class="form-label") }}
+                            {{ candidate_form.email(class="form-control") }}
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            {{ candidate_form.role.label(class="form-label") }}
+                            {{ candidate_form.role(class="form-control") }}
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            {{ candidate_form.start_date.label(class="form-label") }}
+                            {{ candidate_form.start_date(class="form-control", placeholder="YYYY-MM-DD") }}
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            {{ candidate_form.end_date.label(class="form-label") }}
+                            {{ candidate_form.end_date(class="form-control", placeholder="YYYY-MM-DD") }}
+                        </div>
+                        <div class="col-12 mt-2 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-success w-25">Add Candidate</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Candidate List -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <span>Candidate List</span>
+                <!-- 🔍 Search Bar -->
+                <div class="d-flex">
+                    <!-- Search is available to all roles -->
+                    <form class="d-flex me-2" method="get" action="{{ url_for('home') }}">
+                        <input class="form-control form-control-sm me-2" type="text" name="search" 
+                               placeholder="Search by name/email" value="{{ search_query }}">
+                        <button class="btn btn-sm btn-light" type="submit">Search</button>
+                    </form>
+                    <!-- 🗑️ Clear All Candidates - Visible to Admin only -->
+                    {% if current_user.role == 'admin' %}
+                    <form method="POST" action="{{ url_for('clear_candidates') }}" 
+                          onsubmit="return confirm('Are you sure you want to delete ALL candidates?');">
+                        <button type="submit" class="btn btn-sm btn-danger">🗑️ Clear All</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-bordered table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Documents</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for candidate in candidates %}
+                        <tr>
+                            <td>{{ candidate.name }}</td>
+                            <td>{{ candidate.email }}</td>
+                            <td>{{ candidate.role or '' }}</td>
+                            <td>{{ candidate.start_date.strftime('%Y-%m-%d') if candidate.start_date else '' }}</td>
+                            <td>{{ candidate.end_date.strftime('%Y-%m-%d') if candidate.end_date else '' }}</td>
+                            <td>
+                                <div class="d-flex flex-column gap-1">
+                                    {% for doc_type in ['offer', 'appointment', 'experience', 'certificate'] %}
+                                        {% set template = templates|selectattr("type","equalto",doc_type)|first %}
+                                        <div class="d-flex align-items-center mb-1">
+                                            <strong class="me-2">{{ doc_type.capitalize() }}:</strong>
+                                            {% if template %}
+                                                <!-- Generate & Send Email actions visible to Admin and HR -->
+                                                {% if current_user.role in ['admin', 'hr'] %}
+                                                    <a href="{{ url_for('generate_document', candidate_id=candidate._id, template_id=template._id, doc_type=doc_type+'_pdf') }}" title="Generate PDF">📝</a>
+                                                {% endif %}
+                                                
+                                                <!-- Download, Email, Preview visible to all roles -->
+                                                {% set generated_doc = candidate.documents|selectattr("file_type","equalto",doc_type+'_pdf')|first %}
+                                                {% if generated_doc %}
+                                                    <!-- Download is visible to all roles -->
+                                                    <a href="{{ url_for('download_generated', filename=generated_doc.file_path) }}" title="Download PDF">⬇️</a>
+                                                    <!-- Email is now visible to all roles -->
+                                                    <a href="{{ url_for('send_email', candidate_id=candidate._id, template_id=template._id, doc_type=generated_doc.file_type) }}" title="Send Email">📧</a>
+                                                    <!-- Preview is visible to all roles -->
+                                                    <a href="{{ url_for('preview', candidate_id=candidate._id, template_id=template._id) }}" title="Preview">👁️</a>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="text-muted">No template</span>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </td>
+                            <td>
+                                <!-- Download All visible to all roles -->
+                                <a href="{{ url_for('download_all', candidate_id=candidate._id) }}" title="Download All Documents">📦</a>
+                                <!-- Delete Candidate visible to Admin and HR -->
+                                {% if current_user.role in ['admin', 'hr'] %}
+                                <a href="{{ url_for('delete_candidate', candidate_id=candidate._id) }}" title="Delete Candidate">🗑️</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Collapsible Audit Logs - Visible to Admin and HR -->
+        {% if current_user.role in ['admin', 'hr'] %}
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                <a class="btn btn-link text-white text-decoration-none" data-bs-toggle="collapse" href="#auditLogsCollapse" role="button" aria-expanded="false" aria-controls="auditLogsCollapse">
+                    Audit Logs
+                </a>
+                <!-- Clear Audit Logs - Visible to Admin only -->
+                {% if current_user.role == 'admin' %}
+                <a href="{{ url_for('clear_audit_logs') }}" class="btn btn-sm btn-danger"
+                   onclick="return confirm('Are you sure you want to clear all audit logs?');">
+                    Clear Logs
+                </a>
+                {% endif %}
+            </div>
+            <div class="collapse" id="auditLogsCollapse">
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered table-hover align-middle mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Candidate Name</th>
+                                <th>Template Name</th>
+                                <th>Action</th>
+                                <th>User</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in audit_logs %}
+                            <tr>
+                                <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                <td>{{ log.candidate_name }}</td>
+                                <td>{{ log.template_name or 'N/A' }}</td>
+                                <td>{{ log.action }}</td>
+                                <td>{{ log.user_id }}</td> <!-- Display the user ID who performed the action -->
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Certificate of Completion</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f7fb;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 50px;
+      border: 2px solid #007BFF;
+      border-radius: 10px;
+      text-align: center;
+      background: white;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .logo {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 3em;
+      color: #007BFF;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 1.5em;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .recipient-name {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #000;
+    }
+
+    .text-content {
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .dates {
+        margin-top: 20px;
+        font-size: 1.1em;
+    }
+
+    .signature-section {
+      margin-top: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .signature {
+      border-top: 1px solid #000;
+      width: 40%;
+      text-align: center;
+      padding-top: 5px;
+      font-size: 1.1em;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="data:image/png;base64,{{ base64_logo }}" alt="Company Logo" class="logo">
+    <div class="title">Certificate of Completion</div>
+    <div class="subtitle">This certifies that</div>
+    
+    <div class="recipient-name">{{name}}</div>
+    
+    <div class="text-content">has successfully completed the program as a **{{role}}** from **{{start_date}}** to **{{end_date}}**.</div>
+    
+    <div class="text-content">We extend our congratulations and best wishes for their future endeavors.</div>
+
+    <div class="signature-section">
+      <div class="signature">
+        <p>Date: {{date}}</p>
+      </div>
+      <div class="signature">
+        <p>[Signature]</p>
+        <p>[Full Name of Certifying Authority]</p>
+        <p>[Title of Certifying Authority]</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

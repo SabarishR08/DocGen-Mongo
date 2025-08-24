@@ -1,0 +1,49 @@
+<!-- templates/bulk_upload.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bulk Upload | DocGen-Mongo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container mt-4">
+
+        <!-- Alerts -->
+        {% include 'alerts.html' %}
+
+        <h2>Bulk Upload Candidates</h2>
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Select CSV or Excel File</label>
+                        <input type="file" class="form-control" name="file" id="file" accept=".csv,.xls,.xlsx" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload & Generate Docs</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        {% if success %}
+        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            ✅ Documents auto-generated successfully!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+
+        <!-- Error Message -->
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            ❌ {{ error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
