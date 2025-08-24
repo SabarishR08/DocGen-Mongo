@@ -55,16 +55,21 @@ DocGen-Mongo/
         config.cpython-313.pyc  
         forms.cpython-313.pyc  
         models.cpython-313.pyc  
+
 ---
+
 ##⚡ Installation & Setup
 # 1️⃣ Clone the Repository
+```bash
 git clone https://github.com/your-username/DocGen-Mongo.git
 cd DocGen-Mongo
 
 # 2️⃣ Install Requirements
+```bash
 pip install -r requirements.txt
 
 # 3️⃣ Set Up MongoDB
+```bash
 # Install & run MongoDB locally OR use MongoDB Atlas
 # Create a .env file in the project root and add:
 MONGO_URI=mongodb://localhost:27017/docgen
@@ -73,10 +78,12 @@ SENDER_NAME=Prompt Lord
 SENDER_EMAIL=sabarish.edu2024@gmail.com
 
 # 4️⃣ Run the App
+```bash
 python app.py
 # 👉 App will be available at: http://127.0.0.1:5000/
 
 # 5️⃣ Reset Admin (if needed)
+```bash
 python reset_admin.py
 # Default Admin → username: Admin | password: Admin@123
 # ⚠️ Change the password after first login for security
