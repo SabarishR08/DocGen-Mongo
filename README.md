@@ -79,12 +79,12 @@ BREVO_API_KEY=your_api_key_here
 SENDER_NAME=Prompt Lord
 SENDER_EMAIL=sabarish.edu2024@gmail.com
 
-# 4️⃣ Run the App
+4️⃣ Run the App
 ```bash
 python app.py
-# 👉 App will be available at: http://127.0.0.1:5000/
+👉 App will be available at: http://127.0.0.1:5000/
 
-# 5️⃣ Reset Admin (if needed)
+5️⃣ Reset Admin (if needed)
 ```bash
 python reset_admin.py
 # Default Admin → username: Admin | password: Admin@123
@@ -92,7 +92,7 @@ python reset_admin.py
 
 ---
 
-## ​​​ Author & Contact
+Author & Contact
 - **Author:** Sabarish R  
 - 📧 **Email:** [sabarish.edu2024@gmail.com](mailto:sabarish.edu2024@gmail.com)  
 - 🔗 **LinkedIn:** [linkedin.com/in/sabarishr08](https://www.linkedin.com/in/sabarishr08/)  
