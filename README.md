@@ -54,11 +54,13 @@ DocGen-Mongo/
 └───__pycache__/  
         config.cpython-313.pyc  
         forms.cpython-313.pyc  
-        models.cpython-313.pyc  
+        models.cpython-313.pyc
 
 ---
 
 ##⚡ Installation & Setup
+---
+
 # 1️⃣ Clone the Repository
 ```bash
 git clone https://github.com/your-username/DocGen-Mongo.git
