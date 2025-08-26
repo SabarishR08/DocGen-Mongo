@@ -93,6 +93,6 @@ python reset_admin.py
 ---
 
 Author & Contact
-- **Author:** Sabarish R  
+- 👨‍💻 **Author:** Sabarish R  
 - 📧 **Email:** [sabarish.edu2024@gmail.com](mailto:sabarish.edu2024@gmail.com)  
 - 🔗 **LinkedIn:** [linkedin.com/in/sabarishr08](https://www.linkedin.com/in/sabarishr08/)  
