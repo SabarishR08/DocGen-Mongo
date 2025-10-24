@@ -97,7 +97,7 @@ The default credentials will be:
 
 ## **👨‍💻 Author & Contact**
 
-This project was developed as part of the **AICTE Internship – Learnzo Python with Django Full Stack Web Development** assignment.
+This project was developed as part of the **AICTE Internship – Python with Django Full Stack Web Development** assignment.
 
 * **Author:** Sabarish R  
 * **Email:** sabarish.edu2024@gmail.com  
