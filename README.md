@@ -1,104 +1,111 @@
-# **DocGen-Mongo**
+# DocGen-Mongo – Automated Document Generation System using MongoDB
 
-An automated system for generating professional documents with MongoDB.
+An automated system for generating professional documents using MongoDB.
 
-DocGen-Mongo is a robust solution designed to streamline the generation of **offer letters, appointment letters, experience letters, and certificates**. Leveraging MongoDB for secure storage of templates, audit logs, and metadata, this project ensures a seamless and efficient document management workflow.
+DocGen-Mongo streamlines the creation of offer letters, appointment letters, experience letters, and certificates. Templates, audit logs, and metadata are stored in MongoDB for a secure, auditable workflow.
 
-## **🎯 Core Features**
+## 🎯 Core features
 
-* Template Management  
-  Store customizable templates with placeholders (e.g., {{name}}, {{date}}) directly in MongoDB.  
-* Single & Bulk Generation  
-  Generate individual documents or upload a CSV/Excel file to generate multiple documents at once.  
-* Preview before Download  
-  Review and confirm document formatting before exporting.  
-* Export Options  
-  Easily download generated documents in popular formats such as PDF/DOCX.  
-* Role-Based Access Control  
-  Secure the application with distinct privileges for Admin, HR, and Staff users.  
-* Comprehensive Audit Trail  
-  Automatically tracks document generation details, including who generated a document and when.  
-* Email Integration (Optional)  
-  Directly send documents via email using the Brevo API.
+- **Template management:** Store customizable templates with placeholders (e.g. `{{name}}`, `{{date}}`).
+- **Single & bulk generation:** Generate individual documents or upload a CSV/Excel file to create many documents at once.
+- **Preview before export:** Review generated documents before downloading.
+- **Export options:** Download documents as PDF or DOCX.
+- **Role-based access control:** Admin, HR, and Staff roles with distinct privileges.
+- **Comprehensive audit trail:** Tracks who generated a document and when.
+- **Email integration (optional):** Send documents via the Brevo API.
 
-## **📂 Project Structure**
+## 📂 Project structure
 
-DocGen-Mongo/  
-│   .env  
-│   app.py  
-│   requirements.txt  
-│   reset\_admin.py  
-│  
-├───generated\_pdfs/  
-├───static/  
-│   └───style.css  
-│  
-├───templates/  
-│   ├───alerts.html  
-│   ├───Appointment Letter.html  
-│   ├───bulk\_upload.html  
-│   ├───certificate\_template.html  
-│   ├───create\_user.html  
-│   ├───edit\_template.html  
-│   ├───Experience Letter.html  
-│   ├───home.html  
-│   ├───login.html  
-│   ├───navbar.html  
-│   ├───Offer Letter.html  
-│   ├───offer\_letter.html  
-│   ├───preview.html  
-│   └───templates.html  
-│  
-├───uploads/  
-│   └───Bulk\_upload\_test.csv  
-│  
-└───\_\_pycache\_\_/
+```
+DocGen-Mongo/
+│  .env
+│  app.py
+│  requirements.txt
+│  reset_admin.py
+│
+├── generated_pdfs/
+├── static/
+│   └── style.css
+│
+├── templates/
+│   ├── alerts.html
+│   ├── Appointment Letter.html
+│   ├── bulk_upload.html
+│   ├── certificate_template.html
+│   ├── create_user.html
+│   ├── edit_template.html
+│   ├── Experience Letter.html
+│   ├── home.html
+│   ├── login.html
+│   ├── navbar.html
+│   ├── Offer Letter.html
+│   ├── offer_letter.html
+│   ├── preview.html
+│   └── templates.html
+│
+└── uploads/
+    └── Bulk_upload_test.csv
 
-## **⚡ Installation & Setup**
+__pycache__/
+```
 
-Follow these steps to get the project up and running on your local machine.
+## ⚡ Installation & setup
 
-### **1️⃣ Clone the Repository**
+Follow these steps to run the project locally.
 
-git clone \[https://github.com/your-username/DocGen-Mongo.git\](https://github.com/your-username/DocGen-Mongo.git)  
+### 1. Clone the repository
+
+```
+git clone https://github.com/SabarishR08/DocGen-Mongo.git
 cd DocGen-Mongo
+```
 
-### **2️⃣ Install Requirements**
+### 2. Install requirements
 
-pip install \-r requirements.txt
+```
+pip install -r requirements.txt
+```
 
-### **3️⃣ Set Up MongoDB**
+### 3. Set up MongoDB
 
-You can either install and run MongoDB locally or use a cloud service like MongoDB Atlas. Once your MongoDB instance is running, create a .env file in the project root and add your configuration details.
+You can run MongoDB locally or use MongoDB Atlas (cloud-based). Create a `.env` file in the project root with these variables:
 
-MONGO\_URI=mongodb://localhost:27017/docgen  
-BREVO\_API\_KEY=your\_api\_key\_here  
-SENDER\_NAME=Prompt Lord  
-SENDER\_EMAIL=sabarish.edu2024@gmail.com
+```
+MONGO_URI=mongodb://localhost:27017/docgen
+BREVO_API_KEY=your_api_key_here
+SENDER_NAME="Prompt Lord"
+SENDER_EMAIL=sabarish.edu2024@gmail.com
+```
 
-### **4️⃣ Run the Application**
+Note: ensure the database name `docgen` exists or MongoDB will auto-create it when the app first runs.
 
+### 4. Run the application
+
+```
 python app.py
+```
 
-The application will be available at: http://127.0.0.1:5000/
+The app will be available at `http://127.0.0.1:5000/`.
 
-### **5️⃣ Reset Admin (if needed)**
+### 5. Reset admin (optional)
 
-To reset the default admin account, you can run the following command:
+To reset the default admin account, run:
 
-python reset\_admin.py
+```
+python reset_admin.py
+```
 
-The default credentials will be:
+Default Login:
 
-* **Username:** Admin  
-* **Password:** Admin@123
+- **Username:** `Admin`
+- **Password:** `Admin@123`
 
-⚠️ **Important:** For security, please change the password immediately after your first login.
+⚠️ Important: change the default password after first login.
 
-## **👨‍💻 Author & Contact**
+## 👨‍💻 Author & contact
 
-This project was developed as part of the **AICTE Internship – Python with Django Full Stack Web Development** assignment.
+This project was developed as part of the AICTE Internship – Python Full Stack Development.
 
-* **Author:** Sabarish R  
-* **Email:** sabarish.edu2024@gmail.com  
-* **LinkedIn:** [linkedin.com/in/sabarishr08](https://www.linkedin.com/in/sabarishr08/)
+- **Author:** Sabarish R
+- **Email:** `sabarish.edu2024@gmail.com`
+- **LinkedIn:** https://www.linkedin.com/in/sabarishr08/
