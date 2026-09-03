@@ -51,6 +51,57 @@ python app.py
 
 ---
 
+![License](https://img.shields.io/badge/license-MIT-green) ![Language](https://img.shields.io/badge/language-Python-informational)
+
+
+## 📌 Overview
+
+DocGen-Mongo is a Flask + MongoDB powered automation system for generating professional HR documents such as offer, appointment, and experience letters, along with certificates. It supports reusable templates, bulk CSV/Excel uploads, role-based access, audit logging, email integration, and PDF/DOCX export.
+
+## 🏗️ Architecture
+
+```text
+Browser / UI
+     │   HTTP
+     ▼
+Flask app
+```
+
+## 🧰 Tech Stack
+
+- **Language:** Python
+- **Backend:** Flask
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python 3.10+
+
+### 1. Clone
+
+```bash
+git clone https://github.com/SabarishR08/DocGen-Mongo.git
+cd DocGen-Mongo
+```
+
+### 2. Install dependencies
+
+```bash
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### 4. Run
+
+```bash
+python app.py
+```
+
+
+---
+
 An automated system for generating professional documents using MongoDB.
 
 DocGen-Mongo streamlines the creation of offer letters, appointment letters, experience letters, and certificates. Templates, audit logs, and metadata are stored in MongoDB for a secure, auditable workflow.
@@ -160,6 +211,12 @@ This project was developed as part of the AICTE Internship – Python Full Stack
 - **Author:** Sabarish R
 - **Email:** `sabarish.edu2024@gmail.com`
 - **LinkedIn:** https://www.linkedin.com/in/sabarishr08/
+
+---
+
+## 📄 License
+
+[MIT](LICENSE) — © 2026 Sabarish R.
 
 ---
 
